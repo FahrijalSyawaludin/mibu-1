@@ -14,7 +14,7 @@ class DataNifas extends Model
     
     protected $fillable =  [
         'tanggal',
-        'nama_ibu',
+        'id_ibu',
         'kunjungan_nifas',
         'hasil_periksa_payudara',
         'hasil_periksa_pendarahan',
@@ -26,6 +26,6 @@ class DataNifas extends Model
 
     public function ibuHamil()
     {
-        return $this->belongsTo(DataIbuHamil::class, 'nama_ibu');
+        return $this->belongsTo(DataIbuHamil::class, 'id_ibu');
     }
 }

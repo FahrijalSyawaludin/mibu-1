@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_anaks', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nama_ibu');
+            $table->string('id_ibu');
             $table->string('nama_anak');
             $table->date('tanggal_lahir');
             $table->string('umur');

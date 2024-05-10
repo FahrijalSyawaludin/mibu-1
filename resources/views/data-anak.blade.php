@@ -244,7 +244,7 @@
                                                         <tr>
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $da->tanggal }}</td>
-                                                            <td>{{ $da->nama_ibu }}</td>
+                                                            <td>{{ $da->ibuHamil->nama_ibu ?? 'Nama Tidak Ditemukan' }}</td>
                                                             <td>{{ $da->nama_anak }}</td>
                                                             <td>{{ $da->tanggal_lahir }}</td>
                                                             <td>{{ $da->umur }}</td>

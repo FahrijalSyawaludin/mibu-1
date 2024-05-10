@@ -11,11 +11,15 @@ class DataAnakController extends Controller
 {
     public function index(Request $request)
     {
-        $search      = $request->input('search');
-        $perPage     = $request->input('per_page', 5);
-        $data_anaks  = DataAnak::where('nama_ibu', 'like', "%$search%")->orWhere('nama_anak', 'like', "%$search%")->paginate($perPage);
+        $search     = $request->input('search');
+        $perPage    = $request->input('per_page', 5);
+        $data_anaks = DataAnak::with('ibuHamil')
+            ->whereHas('ibuHamil', function ($query) use ($search) {
+                $query->where('id_ibu', 'like', "%$search%")->orWhere('nama_anak', 'like', "%$search%");
+            })
+            ->paginate($perPage);
         $currentPage = $data_anaks->currentPage();
-        return view('data-anak', compact('data_anaks', 'currentPage'));
+        return view('data-anak', compact('data_anaks', 'currentPage', 'perPage'));
     }
 
     public function create()
@@ -28,14 +32,14 @@ class DataAnakController extends Controller
     {
         $request->validate([
             'tanggal'       => 'required',
-            'nama_ibu'      => 'required',
+            'id_ibu'        => 'required',
             'nama_anak'     => 'required',
             'tanggal_lahir' => 'required',
             'umur'          => 'required',
             'berat_badan'   => 'required|integer',
         ], [
             'tanggal.required'       => 'Tanggal Periksa wajib diisi.',
-            'nama_ibu.required'      => 'Nama Ibu wajib diisi.',
+            'id_ibu.required'        => 'Nama Ibu wajib diisi.',
             'nama_anak.required'     => 'Nama Anak wajib diisi.',
             'tanggal_lahir.required' => 'Tanggal Lahir wajib diisi.',
             'umur.required'          => 'Umur wajib diisi.',
@@ -60,14 +64,14 @@ class DataAnakController extends Controller
     {
         $request->validate([
             'tanggal'       => 'required',
-            'nama_ibu'      => 'required',
+            'id_ibu'        => 'required',
             'nama_anak'     => 'required',
             'tanggal_lahir' => 'required',
             'umur'          => 'required',
             'berat_badan'   => 'required|integer',
         ], [
             'tanggal.required'       => 'Tanggal Periksa wajib diisi.',
-            'nama_ibu.required'      => 'Nama Ibu wajib diisi.',
+            'id_ibu.required'        => 'Nama Ibu wajib diisi.',
             'nama_anak.required'     => 'Nama Anak wajib diisi.',
             'tanggal_lahir.required' => 'Tanggal Lahir wajib diisi.',
             'umur.required'          => 'Umur wajib diisi.',
@@ -77,7 +81,7 @@ class DataAnakController extends Controller
         
         $data_anaks                = DataAnak::find($id);
         $data_anaks->tanggal       = $request->tanggal;
-        $data_anaks->nama_ibu      = $request->nama_ibu;
+        $data_anaks->id_ibu        = $request->id_ibu;
         $data_anaks->nama_anak     = $request->nama_anak;
         $data_anaks->tanggal_lahir = $request->tanggal_lahir;
         $data_anaks->umur          = $request->umur;
@@ -123,7 +127,7 @@ class DataAnakController extends Controller
         foreach ($data as $row) {
             $berat_badan          = $row->berat_badan . " Kg";
 
-            $csv .= "{$counter},{$row->tanggal},{$row->nama_ibu},{$row->nama_anak},{$row->tanggal_lahir},{$row->umur},{$berat_badan}\n";
+            $csv .= "{$counter},{$row->tanggal},{$row->id_ibu},{$row->nama_anak},{$row->tanggal_lahir},{$row->umur},{$berat_badan}\n";
             
             $counter++;
         }

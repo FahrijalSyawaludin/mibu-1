@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_nifas', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nama_ibu');
+            $table->string('id_ibu');
             $table->string('kunjungan_nifas');
             $table->string('hasil_periksa_payudara');
             $table->string('hasil_periksa_pendarahan');

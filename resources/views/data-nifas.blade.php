@@ -247,7 +247,7 @@
                                                         <tr>
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $dn->tanggal }}</td>
-                                                            <td>{{ $dn->nama_ibu }}</td>
+                                                            <td>{{ $dn->ibuHamil->nama_ibu ?? 'Nama Tidak Ditemukan' }}</td>
                                                             <td>{{ $dn->kunjungan_nifas }}</td>
                                                             <td>{{ $dn->hasil_periksa_payudara }}</td>
                                                             <td>{{ $dn->hasil_periksa_pendarahan }}</td>

@@ -15,7 +15,7 @@ class DataAnak extends Model
     
     protected $fillable =  [
         'tanggal',
-        'nama_ibu',
+        'id_ibu',
         'nama_anak',
         'tanggal_lahir',
         'umur',
@@ -29,6 +29,6 @@ class DataAnak extends Model
 
     public function ibuHamil()
     {
-        return $this->belongsTo(DataIbuHamil::class, 'nama_ibu');
+        return $this->belongsTo(DataIbuHamil::class, 'id_ibu');
     }
 }
