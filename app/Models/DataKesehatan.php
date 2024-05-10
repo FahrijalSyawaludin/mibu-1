@@ -14,7 +14,7 @@ class DataKesehatan extends Model
     
     protected $fillable =  [
         'tanggal',
-        'nama_ibu',
+        'id_ibu',
         'keluhan',
         'tekanan_darah',
         'berat_badan',
@@ -30,6 +30,6 @@ class DataKesehatan extends Model
 
     public function ibuHamil()
     {
-        return $this->belongsTo(DataIbuHamil::class, 'nama_ibu');
+        return $this->belongsTo(DataIbuHamil::class, 'id_ibu');
     }
 }

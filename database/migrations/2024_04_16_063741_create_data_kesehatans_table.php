@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_kesehatans', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nama_ibu');
+            $table->string('id_ibu');
             $table->string('keluhan');
             $table->integer('tekanan_darah');
             $table->integer('berat_badan');

@@ -223,12 +223,12 @@
 
                                                 <div class="form-group mt-5"> 
                                                     <label for="nama_ibu">Nama Ibu Hamil</label> 
-                                                    <select name="nama_ibu" id="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror">
+                                                    <select name="id_ibu" id="id_ibu" class="form-control @error('id_ibu') is-invalid @enderror">
                                                         @foreach ($data_ibu_hamils as $ibu) 
-                                                            <option value="{{$ibu->nama_ibu}}" {{$ibu->nama_ibu == $data_kesehatans->nama_ibu ? 'selected' : ''}}>{{$ibu->nama_ibu}}</option> 
+                                                            <option value="{{$ibu->id}}" {{$ibu->nama_ibu == $data_kesehatans->id_ibu ? 'selected' : ''}}>{{$ibu->nama_ibu}}</option> 
                                                         @endforeach 
                                                     </select>
-                                                    @error('nama_ibu')
+                                                    @error('id_ibu')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

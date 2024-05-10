@@ -251,7 +251,7 @@
                                                         <tr>
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $dk->tanggal }}</td>
-                                                            <td>{{ $dk->nama_ibu }}</td>
+                                                            <td>{{ $dk->ibuHamil->nama_ibu ?? 'Tidak Ditemukan' }}</td>
                                                             <td>{{ $dk->keluhan }}</td>
                                                             <td>{{ $dk->tekanan_darah }} mmHg</td>
                                                             <td>{{ $dk->berat_badan }} Kg</td>

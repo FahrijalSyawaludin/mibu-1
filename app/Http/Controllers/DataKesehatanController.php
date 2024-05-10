@@ -27,11 +27,19 @@ class DataKesehatanController extends Controller
      */
     public function index(Request $request)
     {
-        $search          = $request->input('search');
-        $perPage         = $request->input('per_page', 5);
-        $data_kesehatans = DataKesehatan::where('nama_ibu', 'like', "%$search%")->paginate($perPage);
+        $search = $request->input('search');
+
+        $perPage = $request->input('per_page', 5);
+
+        $data_kesehatans = DataKesehatan::with('ibuHamil')
+            ->whereHas('ibuHamil', function ($query) use ($search) {
+                $query->where('id_ibu', 'like', "%$search%");
+            })
+            ->paginate($perPage);
+
         $currentPage = $data_kesehatans->currentPage();
-        return view('data-kesehatan', compact('data_kesehatans', 'currentPage'));
+
+        return view('data-kesehatan', compact('data_kesehatans', 'currentPage', 'perPage'));
     }
 
     public function create()
@@ -43,43 +51,45 @@ class DataKesehatanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'tanggal'              => 'required',
-            'nama_ibu'             => 'required',
-            'keluhan'              => 'required',
-            'tekanan_darah'        => 'required|integer',
-            'berat_badan'          => 'required|integer',
-            'umur_kehamilan'       => 'required',
-            'tinggi_fundus'        => 'required|integer',
-            'letak_janin'          => 'required',
-            'denyut_jantung_janin' => 'required|integer',
-            'hasil_lab'            => 'required',
-            'tindakan'             => 'required',
-            'kaki_bengkak'         => 'required',
-            'nasihat'              => 'required',
-        ], [
-            'tanggal.required'              => 'Tanggal wajib diisi.',
-            'nama_ibu.required'             => 'Nama Ibu wajib diisi.',
-            'keluhan.required'              => 'Keluhan wajib diisi.',
-            'tekanan_darah.required'        => 'Tekanan darah wajib diisi.',
-            'tekanan_darah.integer'         => 'Tekanan darah harus berupa angka.',
-            'berat_badan.required'          => 'Berat badan wajib diisi.',
-            'berat_badan.integer'           => 'Berat badan harus berupa angka.',
-            'umur_kehamilan.required'       => 'Umur kehamilan wajib diisi.',
-            'tinggi_fundus.required'        => 'Tinggi fundus wajib diisi.',
-            'tinggi_fundus.integer'         => 'Tinggi fundus harus berupa angka.',
-            'letak_janin.required'          => 'Letak janin wajib diisi.',
-            'denyut_jantung_janin.required' => 'Denyut jantung janin wajib diisi.',
-            'denyut_jantung_janin.integer'  => 'Denyut jantung janin harus berupa angka.',
-            'hasil_lab.required'            => 'Hasil lab wajib diisi.',
-            'tindakan.required'             => 'Tindakan wajib diisi.',
-            'kaki_bengkak.required'         => 'Kaki bengkak wajib diisi.',
-            'nasihat.required'              => 'Nasihat wajib diisi.',
-        ]);
-        
+        $request->validate(
+            [
+                'tanggal'              => 'required',
+                'id_ibu'               => 'required',
+                'keluhan'              => 'required',
+                'tekanan_darah'        => 'required|integer',
+                'berat_badan'          => 'required|integer',
+                'umur_kehamilan'       => 'required',
+                'tinggi_fundus'        => 'required|integer',
+                'letak_janin'          => 'required',
+                'denyut_jantung_janin' => 'required|integer',
+                'hasil_lab'            => 'required',
+                'tindakan'             => 'required',
+                'kaki_bengkak'         => 'required',
+                'nasihat'              => 'required',
+            ],
+            [
+                'tanggal.required'              => 'Tanggal wajib diisi.',
+                'id_ibu.required'               => 'Nama Ibu wajib diisi.',
+                'keluhan.required'              => 'Keluhan wajib diisi.',
+                'tekanan_darah.required'        => 'Tekanan darah wajib diisi.',
+                'tekanan_darah.integer'         => 'Tekanan darah harus berupa angka.',
+                'berat_badan.required'          => 'Berat badan wajib diisi.',
+                'berat_badan.integer'           => 'Berat badan harus berupa angka.',
+                'umur_kehamilan.required'       => 'Umur kehamilan wajib diisi.',
+                'tinggi_fundus.required'        => 'Tinggi fundus wajib diisi.',
+                'tinggi_fundus.integer'         => 'Tinggi fundus harus berupa angka.',
+                'letak_janin.required'          => 'Letak janin wajib diisi.',
+                'denyut_jantung_janin.required' => 'Denyut jantung janin wajib diisi.',
+                'denyut_jantung_janin.integer'  => 'Denyut jantung janin harus berupa angka.',
+                'hasil_lab.required'            => 'Hasil lab wajib diisi.',
+                'tindakan.required'             => 'Tindakan wajib diisi.',
+                'kaki_bengkak.required'         => 'Kaki bengkak wajib diisi.',
+                'nasihat.required'              => 'Nasihat wajib diisi.',
+            ],
+        );
 
         DataKesehatan::create($request->all());
-        toast('Data Berhasil Ditambahkan','success');
+        toast('Data Berhasil Ditambahkan', 'success');
         return redirect()->route('data-kesehatan.index');
     }
 
@@ -92,43 +102,46 @@ class DataKesehatanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'tanggal'              => 'required',
-            'nama_ibu'             => 'required',
-            'keluhan'              => 'required',
-            'tekanan_darah'        => 'required|integer',
-            'berat_badan'          => 'required|integer',
-            'umur_kehamilan'       => 'required',
-            'tinggi_fundus'        => 'required|integer',
-            'letak_janin'          => 'required',
-            'denyut_jantung_janin' => 'required|integer',
-            'hasil_lab'            => 'required',
-            'tindakan'             => 'required',
-            'kaki_bengkak'         => 'required',
-            'nasihat'              => 'required',
-        ], [
-            'tanggal.required'              => 'Tanggal wajib diisi.',
-            'nama_ibu.required'             => 'Nama Ibu wajib diisi.',
-            'keluhan.required'              => 'Keluhan wajib diisi.',
-            'tekanan_darah.required'        => 'Tekanan darah wajib diisi.',
-            'tekanan_darah.integer'         => 'Tekanan darah harus berupa angka.',
-            'berat_badan.required'          => 'Berat badan wajib diisi.',
-            'berat_badan.integer'           => 'Berat badan harus berupa angka.',
-            'umur_kehamilan.required'       => 'Umur kehamilan wajib diisi.',
-            'tinggi_fundus.required'        => 'Tinggi fundus wajib diisi.',
-            'tinggi_fundus.integer'         => 'Tinggi fundus harus berupa angka.',
-            'letak_janin.required'          => 'Letak janin wajib diisi.',
-            'denyut_jantung_janin.required' => 'Denyut jantung janin wajib diisi.',
-            'denyut_jantung_janin.integer'  => 'Denyut jantung janin harus berupa angka.',
-            'hasil_lab.required'            => 'Hasil lab wajib diisi.',
-            'tindakan.required'             => 'Tindakan wajib diisi.',
-            'kaki_bengkak.required'         => 'Kaki bengkak wajib diisi.',
-            'nasihat.required'              => 'Nasihat wajib diisi.',
-        ]);
-        
+        $request->validate(
+            [
+                'tanggal'              => 'required',
+                'id_ibu'               => 'required',
+                'keluhan'              => 'required',
+                'tekanan_darah'        => 'required|integer',
+                'berat_badan'          => 'required|integer',
+                'umur_kehamilan'       => 'required',
+                'tinggi_fundus'        => 'required|integer',
+                'letak_janin'          => 'required',
+                'denyut_jantung_janin' => 'required|integer',
+                'hasil_lab'            => 'required',
+                'tindakan'             => 'required',
+                'kaki_bengkak'         => 'required',
+                'nasihat'              => 'required',
+            ],
+            [
+                'tanggal.required'              => 'Tanggal wajib diisi.',
+                'id_ibu.required'               => 'Nama Ibu wajib diisi.',
+                'keluhan.required'              => 'Keluhan wajib diisi.',
+                'tekanan_darah.required'        => 'Tekanan darah wajib diisi.',
+                'tekanan_darah.integer'         => 'Tekanan darah harus berupa angka.',
+                'berat_badan.required'          => 'Berat badan wajib diisi.',
+                'berat_badan.integer'           => 'Berat badan harus berupa angka.',
+                'umur_kehamilan.required'       => 'Umur kehamilan wajib diisi.',
+                'tinggi_fundus.required'        => 'Tinggi fundus wajib diisi.',
+                'tinggi_fundus.integer'         => 'Tinggi fundus harus berupa angka.',
+                'letak_janin.required'          => 'Letak janin wajib diisi.',
+                'denyut_jantung_janin.required' => 'Denyut jantung janin wajib diisi.',
+                'denyut_jantung_janin.integer'  => 'Denyut jantung janin harus berupa angka.',
+                'hasil_lab.required'            => 'Hasil lab wajib diisi.',
+                'tindakan.required'             => 'Tindakan wajib diisi.',
+                'kaki_bengkak.required'         => 'Kaki bengkak wajib diisi.',
+                'nasihat.required'              => 'Nasihat wajib diisi.',
+            ],
+        );
+
         $data_kesehatans                       = DataKesehatan::find($id);
         $data_kesehatans->tanggal              = $request->tanggal;
-        $data_kesehatans->nama_ibu             = $request->nama_ibu;
+        $data_kesehatans->id_ibu               = $request->id_ibu;
         $data_kesehatans->keluhan              = $request->keluhan;
         $data_kesehatans->tekanan_darah        = $request->tekanan_darah;
         $data_kesehatans->berat_badan          = $request->berat_badan;
@@ -142,7 +155,7 @@ class DataKesehatanController extends Controller
         $data_kesehatans->nasihat              = $request->nasihat;
         $data_kesehatans->save();
 
-        toast('Data Berhasil Diubah','success');
+        toast('Data Berhasil Diubah', 'success');
         return redirect()->route('data-kesehatan.index');
     }
 
@@ -150,7 +163,7 @@ class DataKesehatanController extends Controller
     {
         $data_kesehatans = DataKesehatan::find($id);
         $data_kesehatans->delete();
-        toast('Data Berhasil Dihapus','success');
+        toast('Data Berhasil Dihapus', 'success');
         return redirect(route('data-kesehatan.index'));
     }
 
@@ -160,10 +173,10 @@ class DataKesehatanController extends Controller
 
         $csvData = $this->generateCSV($data_kesehatans);
 
-        $headers = array(
+        $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename=data_kesehatan_mibu.csv',
-        );
+        ];
 
         return Response::make($csvData, 200, $headers);
     }
@@ -179,18 +192,16 @@ class DataKesehatanController extends Controller
         $counter = 1;
 
         foreach ($data as $row) {
-            $tekanan_darah        = $row->tekanan_darah . " mmHg";
-            $berat_badan          = $row->berat_badan . " Kg";
-            $tinggi_fundus        = $row->tinggi_fundus . " Cm";
-            $denyut_jantung_janin = $row->denyut_jantung_janin . " BPM";
+            $tekanan_darah = $row->tekanan_darah . ' mmHg';
+            $berat_badan = $row->berat_badan . ' Kg';
+            $tinggi_fundus = $row->tinggi_fundus . ' Cm';
+            $denyut_jantung_janin = $row->denyut_jantung_janin . ' BPM';
 
-            $csv .= "{$counter},{$row->tanggal},{$row->nama_ibu},{$row->keluhan},{$tekanan_darah},{$berat_badan},{$row->umur_kehamilan},{$tinggi_fundus},{$row->letak_janin},{$denyut_jantung_janin},{$row->hasil_lab},{$row->tindakan},{$row->kaki_bengkak},{$row->nasihat}\n";
-            
+            $csv .= "{$counter},{$row->tanggal},{$row->id_ibu},{$row->keluhan},{$tekanan_darah},{$berat_badan},{$row->umur_kehamilan},{$tinggi_fundus},{$row->letak_janin},{$denyut_jantung_janin},{$row->hasil_lab},{$row->tindakan},{$row->kaki_bengkak},{$row->nasihat}\n";
+
             $counter++;
         }
 
         return $csv;
     }
-
-
 }
