@@ -13,9 +13,13 @@ class DataImunisasiController extends Controller
     {
         $search = $request->input('search');
         $perPage = $request->input('per_page', 5);
-        $data_imunisasis = DataImunisasi::where('nama_anak', 'like', "%$search%")->paginate($perPage);
+        $data_imunisasis = DataImunisasi::with('anak')
+            ->whereHas('anak', function ($query) use ($search) {
+                $query->where('id_anak', 'like', "%$search%");
+            })
+            ->paginate($perPage);
         $currentPage = $data_imunisasis->currentPage();
-        return view('data-imunisasi', compact('data_imunisasis', 'currentPage'));
+        return view('data-imunisasi', compact('data_imunisasis', 'currentPage', 'perPage'));
     }
 
     public function create()
@@ -29,30 +33,30 @@ class DataImunisasiController extends Controller
     {
         $request->validate(
             [
-                'tanggal' => 'required',
-                'nama_anak' => 'required',
-                'imunisasi_dpt_hb_hib_1_polio_2' => 'required',
-                'imunisasi_dpt_hb_hib_2_polio_3' => 'required',
-                'imunisasi_dpt_hb_hib_3_polio_4' => 'required',
-                'imunisasi_campak' => 'required',
-                'imunisasi_dpt_hb_hib_1_dosis' => 'required',
+                'tanggal'                          => 'required',
+                'id_anak'                          => 'required',
+                'imunisasi_dpt_hb_hib_1_polio_2'   => 'required',
+                'imunisasi_dpt_hb_hib_2_polio_3'   => 'required',
+                'imunisasi_dpt_hb_hib_3_polio_4'   => 'required',
+                'imunisasi_campak'                 => 'required',
+                'imunisasi_dpt_hb_hib_1_dosis'     => 'required',
                 'imunisasi_campak_rubella_1_dosis' => 'required',
-                'imunisasi_campak_rubella_dan_dt' => 'required',
-                'imunisasi_tetanus_diphteria_td' => 'required',
-                'nama_pemeriksa' => 'required',
+                'imunisasi_campak_rubella_dan_dt'  => 'required',
+                'imunisasi_tetanus_diphteria_td'   => 'required',
+                'nama_pemeriksa'                   => 'required',
             ],
             [
-                'tanggal.required' => 'Tanggal periksa wajib diisi.',
-                'nama_anak.required' => 'Nama anak wajib diisi.',
-                'imunisasi_dpt_hb_hib_1_polio_2.required' => 'Imunisasi DPT HB Hib 1 Polio 2 wajib diisi.',
-                'imunisasi_dpt_hb_hib_2_polio_3.required' => 'Imunisasi DPT HB Hib 2 Polio 3 wajib diisi.',
-                'imunisasi_dpt_hb_hib_3_polio_4.required' => 'Imunisasi DPT HB Hib 3 Polio 4 wajib diisi.',
-                'imunisasi_campak.required' => 'Imunisasi Campak wajib diisi.',
-                'imunisasi_dpt_hb_hib_1_dosis.required' => 'Imunisasi DPT HB Hib 1 dosis wajib diisi.',
+                'tanggal.required'                          => 'Tanggal periksa wajib diisi.',
+                'id_anak.required'                          => 'Nama anak wajib diisi.',
+                'imunisasi_dpt_hb_hib_1_polio_2.required'   => 'Imunisasi DPT HB Hib 1 Polio 2 wajib diisi.',
+                'imunisasi_dpt_hb_hib_2_polio_3.required'   => 'Imunisasi DPT HB Hib 2 Polio 3 wajib diisi.',
+                'imunisasi_dpt_hb_hib_3_polio_4.required'   => 'Imunisasi DPT HB Hib 3 Polio 4 wajib diisi.',
+                'imunisasi_campak.required'                 => 'Imunisasi Campak wajib diisi.',
+                'imunisasi_dpt_hb_hib_1_dosis.required'     => 'Imunisasi DPT HB Hib 1 dosis wajib diisi.',
                 'imunisasi_campak_rubella_1_dosis.required' => 'Imunisasi Campak Rubella 1 dosis wajib diisi.',
-                'imunisasi_campak_rubella_dan_dt.required' => 'Imunisasi Campak Rubella dan DT wajib diisi.',
-                'imunisasi_tetanus_diphteria_td.required' => 'Imunisasi Tetanus Diphteria TD wajib diisi.',
-                'nama_pemeriksa.required' => 'Nama pemeriksa wajib diisi.',
+                'imunisasi_campak_rubella_dan_dt.required'  => 'Imunisasi Campak Rubella dan DT wajib diisi.',
+                'imunisasi_tetanus_diphteria_td.required'   => 'Imunisasi Tetanus Diphteria TD wajib diisi.',
+                'nama_pemeriksa.required'                   => 'Nama pemeriksa wajib diisi.',
             ],
         );
 
@@ -63,7 +67,6 @@ class DataImunisasiController extends Controller
 
     public function edit($id)
     {
-        // Query untuk mendapatkan data anak-anak dari tabel `data_anaks`
         $data_anaks = DataAnak::all();
 
         $data_imunisasis = DataImunisasi::find($id);
@@ -74,45 +77,45 @@ class DataImunisasiController extends Controller
     {
         $request->validate(
             [
-                'tanggal' => 'required',
-                'nama_anak' => 'required',
-                'imunisasi_dpt_hb_hib_1_polio_2' => 'required',
-                'imunisasi_dpt_hb_hib_2_polio_3' => 'required',
-                'imunisasi_dpt_hb_hib_3_polio_4' => 'required',
-                'imunisasi_campak' => 'required',
-                'imunisasi_dpt_hb_hib_1_dosis' => 'required',
+                'tanggal'                          => 'required',
+                'id_anak'                          => 'required',
+                'imunisasi_dpt_hb_hib_1_polio_2'   => 'required',
+                'imunisasi_dpt_hb_hib_2_polio_3'   => 'required',
+                'imunisasi_dpt_hb_hib_3_polio_4'   => 'required',
+                'imunisasi_campak'                 => 'required',
+                'imunisasi_dpt_hb_hib_1_dosis'     => 'required',
                 'imunisasi_campak_rubella_1_dosis' => 'required',
-                'imunisasi_campak_rubella_dan_dt' => 'required',
-                'imunisasi_tetanus_diphteria_td' => 'required',
-                'nama_pemeriksa' => 'required',
+                'imunisasi_campak_rubella_dan_dt'  => 'required',
+                'imunisasi_tetanus_diphteria_td'   => 'required',
+                'nama_pemeriksa'                   => 'required',
             ],
             [
-                'tanggal.required' => 'Tanggal periksa wajib diisi.',
-                'nama_anak.required' => 'Nama anak wajib diisi.',
-                'imunisasi_dpt_hb_hib_1_polio_2.required' => 'Imunisasi DPT HB Hib 1 Polio 2 wajib diisi.',
-                'imunisasi_dpt_hb_hib_2_polio_3.required' => 'Imunisasi DPT HB Hib 2 Polio 3 wajib diisi.',
-                'imunisasi_dpt_hb_hib_3_polio_4.required' => 'Imunisasi DPT HB Hib 3 Polio 4 wajib diisi.',
-                'imunisasi_campak.required' => 'Imunisasi Campak wajib diisi.',
-                'imunisasi_dpt_hb_hib_1_dosis.required' => 'Imunisasi DPT HB Hib 1 dosis wajib diisi.',
+                'tanggal.required'                          => 'Tanggal periksa wajib diisi.',
+                'id_anak.required'                          => 'Nama anak wajib diisi.',
+                'imunisasi_dpt_hb_hib_1_polio_2.required'   => 'Imunisasi DPT HB Hib 1 Polio 2 wajib diisi.',
+                'imunisasi_dpt_hb_hib_2_polio_3.required'   => 'Imunisasi DPT HB Hib 2 Polio 3 wajib diisi.',
+                'imunisasi_dpt_hb_hib_3_polio_4.required'   => 'Imunisasi DPT HB Hib 3 Polio 4 wajib diisi.',
+                'imunisasi_campak.required'                 => 'Imunisasi Campak wajib diisi.',
+                'imunisasi_dpt_hb_hib_1_dosis.required'     => 'Imunisasi DPT HB Hib 1 dosis wajib diisi.',
                 'imunisasi_campak_rubella_1_dosis.required' => 'Imunisasi Campak Rubella 1 dosis wajib diisi.',
-                'imunisasi_campak_rubella_dan_dt.required' => 'Imunisasi Campak Rubella dan DT wajib diisi.',
-                'imunisasi_tetanus_diphteria_td.required' => 'Imunisasi Tetanus Diphteria TD wajib diisi.',
-                'nama_pemeriksa.required' => 'Nama pemeriksa wajib diisi.',
+                'imunisasi_campak_rubella_dan_dt.required'  => 'Imunisasi Campak Rubella dan DT wajib diisi.',
+                'imunisasi_tetanus_diphteria_td.required'   => 'Imunisasi Tetanus Diphteria TD wajib diisi.',
+                'nama_pemeriksa.required'                   => 'Nama pemeriksa wajib diisi.',
             ],
         );
 
-        $data_imunisasis = DataImunisasi::find($id);
-        $data_imunisasis->tanggal = $request->tanggal;
-        $data_imunisasis->nama_anak = $request->nama_anak;
-        $data_imunisasis->imunisasi_dpt_hb_hib_1_polio_2 = $request->imunisasi_dpt_hb_hib_1_polio_2;
-        $data_imunisasis->imunisasi_dpt_hb_hib_2_polio_3 = $request->imunisasi_dpt_hb_hib_2_polio_3;
-        $data_imunisasis->imunisasi_dpt_hb_hib_3_polio_4 = $request->imunisasi_dpt_hb_hib_3_polio_4;
-        $data_imunisasis->imunisasi_campak = $request->imunisasi_campak;
-        $data_imunisasis->imunisasi_dpt_hb_hib_1_dosis = $request->imunisasi_dpt_hb_hib_1_dosis;
+        $data_imunisasis                                   = DataImunisasi::find($id);
+        $data_imunisasis->tanggal                          = $request->tanggal;
+        $data_imunisasis->id_anak                          = $request->id_anak;
+        $data_imunisasis->imunisasi_dpt_hb_hib_1_polio_2   = $request->imunisasi_dpt_hb_hib_1_polio_2;
+        $data_imunisasis->imunisasi_dpt_hb_hib_2_polio_3   = $request->imunisasi_dpt_hb_hib_2_polio_3;
+        $data_imunisasis->imunisasi_dpt_hb_hib_3_polio_4   = $request->imunisasi_dpt_hb_hib_3_polio_4;
+        $data_imunisasis->imunisasi_campak                 = $request->imunisasi_campak;
+        $data_imunisasis->imunisasi_dpt_hb_hib_1_dosis     = $request->imunisasi_dpt_hb_hib_1_dosis;
         $data_imunisasis->imunisasi_campak_rubella_1_dosis = $request->imunisasi_campak_rubella_1_dosis;
-        $data_imunisasis->imunisasi_campak_rubella_dan_dt = $request->imunisasi_campak_rubella_dan_dt;
-        $data_imunisasis->imunisasi_tetanus_diphteria_td = $request->imunisasi_tetanus_diphteria_td;
-        $data_imunisasis->nama_pemeriksa = $request->nama_pemeriksa;
+        $data_imunisasis->imunisasi_campak_rubella_dan_dt  = $request->imunisasi_campak_rubella_dan_dt;
+        $data_imunisasis->imunisasi_tetanus_diphteria_td   = $request->imunisasi_tetanus_diphteria_td;
+        $data_imunisasis->nama_pemeriksa                   = $request->nama_pemeriksa;
         $data_imunisasis->save();
 
         toast('Data Berhasil Diubah', 'success');
@@ -152,7 +155,7 @@ class DataImunisasiController extends Controller
         $counter = 1;
 
         foreach ($data as $row) {
-            $csv .= "{$counter},{$row->tanggal},{$row->nama_anak},{$row->imunisasi_dpt_hb_hib_1_polio_2},{$row->imunisasi_dpt_hb_hib_2_polio_3},{$row->imunisasi_dpt_hb_hib_3_polio_4},{$row->imunisasi_campak},{$row->imunisasi_dpt_hb_hib_1_dosis},{$row->imunisasi_campak_rubella_1_dosis},{$row->imunisasi_campak_rubella_dan_dt},{$row->imunisasi_tetanus_diphteria_td},{$row->nama_pemeriksa}\n";
+            $csv .= "{$counter},{$row->tanggal},{$row->id_anak},{$row->imunisasi_dpt_hb_hib_1_polio_2},{$row->imunisasi_dpt_hb_hib_2_polio_3},{$row->imunisasi_dpt_hb_hib_3_polio_4},{$row->imunisasi_campak},{$row->imunisasi_dpt_hb_hib_1_dosis},{$row->imunisasi_campak_rubella_1_dosis},{$row->imunisasi_campak_rubella_dan_dt},{$row->imunisasi_tetanus_diphteria_td},{$row->nama_pemeriksa}\n";
 
             $counter++;
         }

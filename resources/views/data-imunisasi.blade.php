@@ -250,7 +250,7 @@
                                                         <tr>
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $di->tanggal }}</td>
-                                                            <td>{{ $di->nama_anak }}</td>
+                                                            <td>{{ $di->anak->nama_anak ?? 'Nama Tidak Ditemukan' }}</td>
                                                             <td>{{ $di->imunisasi_dpt_hb_hib_1_polio_2 }}</td>
                                                             <td>{{ $di->imunisasi_dpt_hb_hib_2_polio_3 }}</td>
                                                             <td>{{ $di->imunisasi_dpt_hb_hib_3_polio_4 }}</td>

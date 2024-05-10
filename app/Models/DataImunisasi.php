@@ -14,7 +14,7 @@ class DataImunisasi extends Model
     
     protected $fillable =  [
         'tanggal',
-        'nama_anak',
+        'id_anak',
         'imunisasi_dpt_hb_hib_1_polio_2',
         'imunisasi_dpt_hb_hib_2_polio_3',
         'imunisasi_dpt_hb_hib_3_polio_4',
@@ -28,6 +28,6 @@ class DataImunisasi extends Model
 
     public function anak()
     {
-        return $this->belongsTo(DataAnak::class, 'nama_anak');
+        return $this->belongsTo(DataAnak::class, 'id_anak');
     }
 }

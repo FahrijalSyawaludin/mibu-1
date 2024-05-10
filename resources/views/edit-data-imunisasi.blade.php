@@ -223,12 +223,12 @@
 
                                                 <div class="form-group mt-5"> 
                                                     <label for="nama_anak">Nama Anak</label> 
-                                                    <select name="nama_anak" id="nama_anak" class="form-control @error('nama_anak') is-invalid @enderror">
+                                                    <select name="id_anak" id="id_anak" class="form-control @error('id_anak') is-invalid @enderror">
                                                         @foreach ($data_anaks as $anak) 
-                                                            <option value="{{$anak->nama_anak}}" {{$anak->nama_anak == $data_imunisasis->nama_anak ? 'selected' : ''}}>{{$anak->nama_anak}}</option> 
+                                                            <option value="{{$anak->id_anak}}" {{$anak->nama_anak == $data_imunisasis->id_anak ? 'selected' : ''}}>{{$anak->nama_anak}}</option> 
                                                         @endforeach 
                                                     </select>
-                                                    @error('nama_anak')
+                                                    @error('id_anak')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

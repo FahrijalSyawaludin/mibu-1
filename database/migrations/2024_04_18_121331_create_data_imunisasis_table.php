@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_imunisasis', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nama_anak');
+            $table->string('id_anak');
             $table->string('imunisasi_dpt_hb_hib_1_polio_2');
             $table->string('imunisasi_dpt_hb_hib_2_polio_3');
             $table->string('imunisasi_dpt_hb_hib_3_polio_4');

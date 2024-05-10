@@ -222,14 +222,14 @@
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="nama_anak"><strong>Nama Anak</strong></label>
-                                                    <select name="nama_anak" id="nama_anak" class="form-control @error('nama_anak') is-invalid @enderror">
+                                                    <label for=""><strong>Nama Anak</strong></label>
+                                                    <select name="id_anak" id="id_anak" class="form-control @error('id_anak') is-invalid @enderror">
                                                         <option value="">Pilih Nama Anak</option>
                                                         @foreach($data_anaks as $anak)
-                                                            <option value="{{ $anak->nama_anak }}">{{ $anak->nama_anak }}</option>
+                                                            <option value="{{ $anak->id }}">{{ $anak->nama_anak }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('nama_anak')
+                                                    @error('id_anak')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
