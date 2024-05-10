@@ -132,8 +132,7 @@ class DataImunisasiController extends Controller
 
     public function download()
     {
-        $data_imunisasis = DataImunisasi::all();
-
+        $data_imunisasis = DataImunisasi::with('anak')->get();
         $csvData = $this->generateCSV($data_imunisasis);
 
         $headers = [
@@ -155,7 +154,9 @@ class DataImunisasiController extends Controller
         $counter = 1;
 
         foreach ($data as $row) {
-            $csv .= "{$counter},{$row->tanggal},{$row->id_anak},{$row->imunisasi_dpt_hb_hib_1_polio_2},{$row->imunisasi_dpt_hb_hib_2_polio_3},{$row->imunisasi_dpt_hb_hib_3_polio_4},{$row->imunisasi_campak},{$row->imunisasi_dpt_hb_hib_1_dosis},{$row->imunisasi_campak_rubella_1_dosis},{$row->imunisasi_campak_rubella_dan_dt},{$row->imunisasi_tetanus_diphteria_td},{$row->nama_pemeriksa}\n";
+            $id_anak = $row->anak ? $row->anak->nama_anak : 'Nama Tidak Ditemukan'; 
+
+            $csv .= "{$counter},{$row->tanggal},{$id_anak},{$row->imunisasi_dpt_hb_hib_1_polio_2},{$row->imunisasi_dpt_hb_hib_2_polio_3},{$row->imunisasi_dpt_hb_hib_3_polio_4},{$row->imunisasi_campak},{$row->imunisasi_dpt_hb_hib_1_dosis},{$row->imunisasi_campak_rubella_1_dosis},{$row->imunisasi_campak_rubella_dan_dt},{$row->imunisasi_tetanus_diphteria_td},{$row->nama_pemeriksa}\n";
 
             $counter++;
         }

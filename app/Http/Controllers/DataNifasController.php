@@ -120,8 +120,7 @@ class DataNifasController extends Controller
 
     public function download()
     {
-        $data_nifas = DataNifas::all();
-
+        $data_nifas = DataNifas::with('ibuHamil')->get();
         $csvData = $this->generateCSV($data_nifas);
 
         $headers = [
@@ -143,7 +142,9 @@ class DataNifasController extends Controller
         $counter = 1;
 
         foreach ($data as $row) {
-            $csv .= "{$counter},{$row->tanggal},{$row->id_ibu},{$row->kunjungan_nifas},{$row->hasil_periksa_payudara},{$row->hasil_periksa_pendarahan},{$row->hasil_periksa_jalan_lahir},{$row->vitamin_a},{$row->masalah},{$row->tindakan}\n";
+            $id_ibu = $row->ibuHamil ? $row->ibuHamil->nama_ibu : 'Nama Tidak Ditemukan'; 
+
+            $csv .= "{$counter},{$row->tanggal},{$id_ibu},{$row->kunjungan_nifas},{$row->hasil_periksa_payudara},{$row->hasil_periksa_pendarahan},{$row->hasil_periksa_jalan_lahir},{$row->vitamin_a},{$row->masalah},{$row->tindakan}\n";
 
             $counter++;
         }

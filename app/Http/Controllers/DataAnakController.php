@@ -102,8 +102,7 @@ class DataAnakController extends Controller
 
     public function download()
     {
-        $data_anaks = DataAnak::all();
-
+        $data_anaks = DataAnak::with('ibuHamil')->get();
         $csvData = $this->generateCSV($data_anaks);
 
         $headers = array(
@@ -126,8 +125,9 @@ class DataAnakController extends Controller
 
         foreach ($data as $row) {
             $berat_badan          = $row->berat_badan . " Kg";
+            $id_ibu = $row->ibuHamil ? $row->ibuHamil->nama_ibu : 'Nama Tidak Ditemukan'; 
 
-            $csv .= "{$counter},{$row->tanggal},{$row->id_ibu},{$row->nama_anak},{$row->tanggal_lahir},{$row->umur},{$berat_badan}\n";
+            $csv .= "{$counter},{$row->tanggal},{$id_ibu},{$row->nama_anak},{$row->tanggal_lahir},{$row->umur},{$berat_badan}\n";
             
             $counter++;
         }
