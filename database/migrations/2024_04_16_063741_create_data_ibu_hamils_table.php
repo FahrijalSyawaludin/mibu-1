@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('umur_ibu');
             $table->string('alamat');
             $table->string('email');
+            $table->string('password');
             $table->string('nik');
             $table->string('no_telepon');
             $table->integer('kehamilan_ke');

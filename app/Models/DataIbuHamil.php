@@ -17,6 +17,7 @@ class DataIbuHamil extends Model
         'umur_ibu',
         'alamat',
         'email',
+        'password',
         'nik',
         'no_telepon',
         'kehamilan_ke',
