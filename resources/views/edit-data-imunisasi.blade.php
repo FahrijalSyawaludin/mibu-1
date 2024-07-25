@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -225,126 +237,372 @@
                                                     <label for="nama_anak">Nama Anak</label> 
                                                     <select name="nama_anak" id="nama_anak" class="form-control @error('nama_anak') is-invalid @enderror">
                                                         @foreach ($data_anaks as $anak) 
-                                                            <option value="{{$anak->nama_anak}}" {{$anak->nama_anak == $data_imunisasis->nama_anak ? 'selected' : ''}}>{{$anak->nama_anak}}</option> 
+                                                            <option value="{{$anak->nama_anak}}" data-id="{{ $anak->id }}" {{$anak->nama_anak == $data_imunisasis->nama_anak ? 'selected' : ''}}>{{$anak->nama_anak}}</option> 
                                                         @endforeach 
                                                     </select>
+                                                    <input type="hidden" name="id_anak" id="id_anak" value="{{ $data_imunisasis->id_anak }}">
                                                     @error('nama_anak')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                     @enderror
                                                 </div>
-
+                                                
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi DPT-HB-Hib 1 Polio 2?</label>
-                                                    <select class="form-control @error('imunisasi_dpt_hb_hib_1_polio_2') is-invalid @enderror" id="imunisasi_dpt_hb_hib_1_polio_2" name="imunisasi_dpt_hb_hib_1_polio_2" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_dpt_hb_hib_1_polio_2 == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_dpt_hb_hib_1_polio_2 == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_dpt_hb_hib_1_polio_2')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span> 
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Hepatitis B</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="hepatitis_b" value="Sudah" @if($data_imunisasis->hepatitis_b == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_hepatitis_b">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_hepatitis_b" id="tanggal_imunisasi_hepatitis_b" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_hepatitis_b ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi DPT-HB-Hib 2 Polio 3?</label>
-                                                    <select class="form-control @error('imunisasi_dpt_hb_hib_2_polio_3') is-invalid @enderror" id="imunisasi_dpt_hb_hib_2_polio_3" name="imunisasi_dpt_hb_hib_2_polio_3" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_dpt_hb_hib_2_polio_3 == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_dpt_hb_hib_2_polio_3 == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_dpt_hb_hib_2_polio_3')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>     
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Hepatitis BCG</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="bcg" value="Sudah" @if($data_imunisasis->bcg == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_bcg">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_bcg" id="tanggal_imunisasi_bcg" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_bcg ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi DPT-HB-Hib 3 Polio 4?</label>
-                                                    <select class="form-control @error('imunisasi_dpt_hb_hib_3_polio_4') is-invalid @enderror" id="imunisasi_dpt_hb_hib_3_polio_4" name="imunisasi_dpt_hb_hib_3_polio_4" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_dpt_hb_hib_3_polio_4 == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_dpt_hb_hib_3_polio_4 == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_dpt_hb_hib_3_polio_4')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span> 
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Polio Tetes 1</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_tetes_1" value="Sudah" @if($data_imunisasis->polio_tetes_1 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_tetes_1">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_tetes_1" id="tanggal_imunisasi_polio_tetes_1" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_tetes_1 ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi Campak?</label>
-                                                    <select class="form-control @error('imunisasi_campak') is-invalid @enderror" id="imunisasi_campak" name="imunisasi_campak" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_campak == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_campak == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_campak')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi DPT-HB-Hib 1</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="dpt_hb_hib_1" value="Sudah" @if($data_imunisasis->dpt_hb_hib_1 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_dpt_hb_hib_1">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_dpt_hb_hib_1" id="tanggal_imunisasi_dpt_hb_hib_1" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_dpt_hb_hib_1 ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi DPT-HB-Hib 1 Dosis?</label>
-                                                    <select class="form-control @error('imunisasi_dpt_hb_hib_1_dosis') is-invalid @enderror" id="imunisasi_dpt_hb_hib_1_dosis" name="imunisasi_dpt_hb_hib_1_dosis" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_dpt_hb_hib_1_dosis == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_dpt_hb_hib_1_dosis == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_dpt_hb_hib_1_dosis')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Polio Tetes 2</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_tetes_2" value="Sudah" @if($data_imunisasis->polio_tetes_2 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_tetes_2">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_tetes_2" id="tanggal_imunisasi_polio_tetes_2" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_tetes_2 ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi Campak Rubella 1 Dosis?</label>
-                                                    <select class="form-control @error('imunisasi_campak_rubella_1_dosis') is-invalid @enderror" id="imunisasi_campak_rubella_1_dosis" name="imunisasi_campak_rubella_1_dosis" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_campak_rubella_1_dosis == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_campak_rubella_1_dosis == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_campak_rubella_1_dosis')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Rota virus 1</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="rota_virus_1" value="Sudah" @if($data_imunisasis->rota_virus_1 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_rota_virus_1">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_rota_virus_1" id="tanggal_imunisasi_rota_virus_1" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_rota_virus_1 ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi PCV 1</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="pcv_1" value="Sudah" @if($data_imunisasis->pcv_1 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_pcv_1">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_pcv_1" id="tanggal_imunisasi_pcv_1" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_pcv_1 ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi Campak Rubella dan DT?</label>
-                                                    <select class="form-control @error('imunisasi_campak_rubella_dan_dt') is-invalid @enderror" id="imunisasi_campak_rubella_dan_dt" name="imunisasi_campak_rubella_dan_dt" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_campak_rubella_dan_dt == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_campak_rubella_dan_dt == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_campak_rubella_dan_dt')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi DPT-HB-Hib 2</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="dpt_hb_hib_2" value="Sudah" @if($data_imunisasis->dpt_hb_hib_2 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_dpt_hb_hib_2">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_dpt_hb_hib_2" id="tanggal_imunisasi_dpt_hb_hib_2" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_dpt_hb_hib_2 ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
-                                                    <label for="" class="form-label">Apakah Sudah Imunisasi Tetanus Diphteria TD?</label>
-                                                    <select class="form-control @error('imunisasi_tetanus_diphteria_td') is-invalid @enderror" id="imunisasi_tetanus_diphteria_td" name="imunisasi_tetanus_diphteria_td" title="Pilih Jawaban">
-                                                        <option value="" disabled selected hidden>Pilih Jawaban</option>
-                                                        <option value="Sudah" @if($data_imunisasis->imunisasi_tetanus_diphteria_td == 'Sudah') selected @endif>Sudah</option>
-                                                        <option value="Belum" @if($data_imunisasis->imunisasi_tetanus_diphteria_td == 'Belum') selected @endif>Belum</option>
-                                                    </select>
-                                                    @error('imunisasi_tetanus_diphteria_td')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label class="form-label"><strong>Imunisasi Polio Tetes 3</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_tetes_3" value="Sudah" @if($data_imunisasis->polio_tetes_3 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_tetes_3">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_tetes_3" id="tanggal_imunisasi_polio_tetes_3" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_tetes_3 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Rotavirus 2</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="rota_virus_2" value="Sudah" @if($data_imunisasis->rota_virus_2 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_rota_virus_2">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_rota_virus_2" id="tanggal_imunisasi_rota_virus_2" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_rota_virus_2 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi PCV 2</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="pcv_2" value="Sudah" @if($data_imunisasis->pcv_2 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_pcv_2">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_pcv_2" id="tanggal_imunisasi_pcv_2" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_pcv_2 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi DPT-HB-Hib 3</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="dpt_hb_hib_3" value="Sudah" @if($data_imunisasis->dpt_hb_hib_3 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_dpt_hb_hib_3">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_dpt_hb_hib_3" id="tanggal_imunisasi_dpt_hb_hib_3" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_dpt_hb_hib_3 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Polio Tetes 4</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_tetes_4" value="Sudah" @if($data_imunisasis->polio_tetes_4 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_tetes_4">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_tetes_4" id="tanggal_imunisasi_polio_tetes_4" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_tetes_4 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Polio Suntik 1</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_suntik_1" value="Sudah" @if($data_imunisasis->polio_suntik_1 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_suntik_1">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_suntik_1" id="tanggal_imunisasi_polio_suntik_1" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_suntik_1 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Rotavirus 3</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="rota_virus_3" value="Sudah" @if($data_imunisasis->rota_virus_3 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_rota_virus_3">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_rota_virus_3" id="tanggal_imunisasi_rota_virus_3" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_rota_virus_3 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Campak Rubella</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="campak_rubella" value="Sudah" @if($data_imunisasis->campak_rubella == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_campak_rubella">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_campak_rubella" id="tanggal_imunisasi_campak_rubella" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_campak_rubella ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Polio Suntik 2</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="polio_suntik_2" value="Sudah" @if($data_imunisasis->polio_suntik_2 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_polio_suntik_2">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_polio_suntik_2" id="tanggal_imunisasi_polio_suntik_2" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_polio_suntik_2 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Japanese Encephalitis</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="japanese_encephalitis" value="Sudah" @if($data_imunisasis->japanese_encephalitis == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_japanese_encephalitis">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_japanese_encephalitis" id="tanggal_imunisasi_japanese_encephalitis" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_japanese_encephalitis ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi PCV 3</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="pcv_3" value="Sudah" @if($data_imunisasis->pcv_3 == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_pcv_3">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_pcv_3" id="tanggal_imunisasi_pcv_3" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_pcv_3 ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi DPT-HB-Hib Lanjutan</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="dpt_hb_hib_lanjutan" value="Sudah" @if($data_imunisasis->dpt_hb_hib_lanjutan == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_dpt_hb_hib_lanjutan">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_dpt_hb_hib_lanjutan" id="tanggal_imunisasi_dpt_hb_hib_lanjutan" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_dpt_hb_hib_lanjutan ?? '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label class="form-label"><strong>Imunisasi Campak Rubella Lanjutan</strong></label>
+                                                    <div class="col-9 col-form-label">
+                                                        <label>Apakah Sudah imunisasi?</label>
+                                                        <div class="checkbox-list">
+                                                            <label class="checkbox">
+                                                                <input type="checkbox" name="campak_rubella_lanjutan" value="Sudah" @if($data_imunisasis->campak_rubella_lanjutan == 'Sudah') checked @endif />
+                                                                <span></span>
+                                                                Sudah
+                                                            </label>
+                                                        </div>
+                                                        <br>
+                                                        <label for="tanggal_imunisasi_campak_rubella_lanjutan">Tanggal Imunisasi</label>
+                                                        <input type="date" name="tanggal_imunisasi_campak_rubella_lanjutan" id="tanggal_imunisasi_campak_rubella_lanjutan" class="form-control" placeholder="Pilih Tanggal Imunisasi" value="{{ $data_imunisasis->tanggal_imunisasi_campak_rubella_lanjutan ?? '' }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mt-5">
@@ -442,6 +700,13 @@
             <!--end::Content-->
         </div>
         <!-- end::User Panel-->
+        <script>
+            document.getElementById('nama_anak').addEventListener('change', function() {
+                var selectedOption = this.options[this.selectedIndex];
+                var idAnak = selectedOption.getAttribute('data-id');
+                document.getElementById('id_anak').value = idAnak;
+            });
+        </script>
     </body>
     <!--end::Body-->
 @endsection

@@ -3,6 +3,17 @@
 @section('content')
     <!--begin::Body-->
 
+    <head>
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- jQuery (necessary for Select2) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    </head>
     <body id="kt_body"
         class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading">
         <!--begin::Main-->
@@ -57,8 +68,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +96,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +118,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -225,9 +248,10 @@
                                                     <label for="nama_ibu">Nama Ibu Hamil</label> 
                                                     <select name="nama_ibu" id="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror">
                                                         @foreach ($data_ibu_hamils as $ibu) 
-                                                            <option value="{{$ibu->nama_ibu}}" {{$ibu->nama_ibu == $data_kesehatans->nama_ibu ? 'selected' : ''}}>{{$ibu->nama_ibu}}</option> 
+                                                            <option value="{{$ibu->nama_ibu}}" data-id="{{ $ibu->id }}" {{$ibu->nama_ibu == $data_kesehatans->nama_ibu ? 'selected' : ''}}>{{$ibu->nama_ibu}}</option> 
                                                         @endforeach 
                                                     </select>
+                                                    <input type="hidden" name="id_ibu" id="id_ibu" value="{{ $data_kesehatans->id_ibu }}">
                                                     @error('nama_ibu')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -240,6 +264,39 @@
                                                     <input type="text" name="keluhan" id="keluhan" class="form-control @error('keluhan') is-invalid @enderror" value="{{ $data_kesehatans->keluhan }}"
                                                         placeholder="Masukkan Keluhan yang Dialami">
                                                     @error('keluhan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Tinggi badan</strong></label>
+                                                    <input type="text" name="tinggi_badan" id="tinggi_badan" class="form-control @error('tinggi_badan') is-invalid @enderror" value="{{ $data_kesehatans->tinggi_badan }}"
+                                                        placeholder="Masukkan Tinggi Badan">
+                                                    @error('tinggi_badan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Lingkar Perut</strong></label>
+                                                    <input type="text" name="lingkar_perut" id="lingkar_perut" class="form-control @error('lingkar_perut') is-invalid @enderror" value="{{ $data_kesehatans->lingkar_perut }}"
+                                                        placeholder="Masukkan Lingkar Perut">
+                                                    @error('lingkar_perut')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Lingkar Lengan Atas</strong></label>
+                                                    <input type="text" name="lingkar_lengan_atas" id="lingkar_lengan_atas" class="form-control @error('lingkar_lengan_atas') is-invalid @enderror" value="{{ $data_kesehatans->lingkar_lengan_atas }}"
+                                                        placeholder="Masukkan Lingkar Lengan Atas">
+                                                    @error('lingkar_lengan_atas')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -356,6 +413,33 @@
                                                     @enderror
                                                 </div>
 
+                                                <div class="form-group mt-5">
+                                                    <label for="nama_pemeriksa"><strong>Nama Pemeriksa</strong></label>
+                                                    <select name="nama_pemeriksa" id="nama_pemeriksa" class="form-control @error('nama_pemeriksa') is-invalid @enderror">
+                                                        <option value="">Pilih Nama Pemeriksa</option>
+                                                        @foreach($data_pemeriksas as $bidan)
+                                                            <option value="{{ $bidan->name }}" data-id="{{ $bidan->id }}" {{ $bidan->id == $data_kesehatans->id_pemeriksa ? 'selected' : '' }}>{{ $bidan->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="id_pemeriksa" id="id_pemeriksa" value="{{ $data_kesehatans->id_pemeriksa }}">
+                                                    @error('nama_pemeriksa')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for="tanggal_hpl"><strong>Tanggal HPL (Optional)</strong></label>
+                                                    <input type="date" name="tanggal_hpl" id="tanggal_hpl" class="form-control @error('tanggal_hpl') is-invalid @enderror" value="{{ $data_kesehatans->tanggal_hpl }}"
+                                                        placeholder="Pilih HPL (Optional)">
+                                                    @error('tanggal_hpl')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
                                                 <div class="text-right">
                                                     <a href="{{ route('data-kesehatan.index') }}" class="btn btn-outline-danger mr-2"
                                                         role="button">Batal</a>
@@ -441,6 +525,47 @@
         </div>
         <!-- end::User Panel-->
         @include('sweetalert::alert')
+        <script>
+            $(document).ready(function() {
+                $('#nama_ibu').select2({
+                    placeholder: "Pilih Nama Pasien",
+                    width: '100%' // Ensure the Select2 element takes the full width
+                });
+
+                // Update hidden input when a new selection is made
+                $('#nama_ibu').on('change', function() {
+                    var selectedId = $(this).find(':selected').data('id');
+                    $('#id_ibu').val(selectedId);
+                });
+            });
+
+            $(document).ready(function() {
+                $('#nama_pemeriksa').select2({
+                    placeholder: "Pilih Nama Pemeriksa",
+                    width: '100%' // Ensure the Select2 element takes the full width
+                });
+
+                // Update hidden input when a new selection is made
+                $('#nama_pemeriksa').on('change', function() {
+                    var selectedId = $(this).find(':selected').data('id');
+                    $('#id_pemeriksa').val(selectedId);
+                });
+            });
+        </script>
+
+        <style>
+            .select2-container--default .select2-selection--single .select2-selection__placeholder {
+                color: #999;
+                line-height: 2; /* Adjust this value to center the placeholder vertically */
+                padding: 8px 1.5px; /* Adjust this value to center the placeholder vertically */
+            }
+            .select2-container--default .select2-selection--single {
+                height: calc(1.5em + .75rem + 2px); /* Adjust to match your form-control height */
+                padding: 8px 2px; /* Adjust this value to center the placeholder vertically */
+                display: flex;
+                align-items: center; /* Center content vertically */
+            }
+        </style>
     </body>
     <!--end::Body-->
 @endsection

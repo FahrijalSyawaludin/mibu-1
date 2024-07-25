@@ -83,7 +83,7 @@
                 <div class="login-aside order-2 order-lg-1 d-flex flex-row-auto position-relative overflow-hidden">
                     <div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-13 px-lg-35">
                         <a href="#" class="text-center pt-2">
-                            <img src="assets/media/logos/Logo_Mibu.png" class="max-h-100px" alt="" />
+                            <img src="assets/media/logos/logowithbg.png" class="max-h-100px" alt="" />
                         </a>
                         <div class="d-flex flex-column-fluid flex-column flex-center">
                             <div class="login-form login-signin py-11">
@@ -103,6 +103,54 @@
                                             class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name') }}" autocomplete="name" autofocus />
                                         @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat"
+                                            class="font-size-h6 font-weight-bolder text-dark">{{ __('Alamat') }}</label>
+                                        <input id="alamat" type="text"
+                                            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('alamat') is-invalid @enderror"
+                                            name="alamat" value="{{ old('alamat') }}" autocomplete="alamat" autofocus />
+                                        @error('alamat')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_telepon"
+                                            class="font-size-h6 font-weight-bolder text-dark">{{ __('No Telepon') }}</label>
+                                        <input id="no_telepon" type="text"
+                                            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('no_telepon') is-invalid @enderror"
+                                            name="no_telepon" value="{{ old('no_telepon') }}" autocomplete="no_telepon" autofocus />
+                                        @error('no_telepon')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_str"
+                                            class="font-size-h6 font-weight-bolder text-dark">{{ __('No STR') }}</label>
+                                        <input id="no_str" type="text"
+                                            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('no_str') is-invalid @enderror"
+                                            name="no_str" value="{{ old('no_str') }}" autocomplete="no_str" autofocus />
+                                        @error('no_str')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nik"
+                                            class="font-size-h6 font-weight-bolder text-dark">{{ __('NIK') }}</label>
+                                        <input id="nik" type="text"
+                                            class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('nik') is-invalid @enderror"
+                                            name="nik" value="{{ old('nik') }}" autocomplete="nik" autofocus />
+                                        @error('nik')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

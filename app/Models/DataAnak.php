@@ -16,10 +16,13 @@ class DataAnak extends Model
     protected $fillable =  [
         'tanggal',
         'nama_ibu',
+        'id_ibu',
         'nama_anak',
         'tanggal_lahir',
         'umur',
         'berat_badan',
+        'tinggi_badan',
+        'lingkar_kepala',
     ];
 
     public function imunisasi()

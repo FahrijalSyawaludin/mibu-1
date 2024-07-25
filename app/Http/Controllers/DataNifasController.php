@@ -29,6 +29,7 @@ class DataNifasController extends Controller
         $request->validate([
             'tanggal'                   => 'required',
             'nama_ibu'                  => 'required',
+            'id_ibu'                    => 'required|exists:data_ibu_hamils,id',
             'kunjungan_nifas'           => 'required',
             'hasil_periksa_payudara'    => 'required',
             'hasil_periksa_pendarahan'  => 'required',
@@ -47,9 +48,12 @@ class DataNifasController extends Controller
             'masalah.required'                   => 'Masalah wajib diisi.',
             'tindakan.required'                  => 'Tindakan wajib diisi.',
         ]);
+
+        $data = $request->all();
+        $data['nama_ibu'] = DataIbuHamil::find($request->id_ibu)->nama_ibu;
         
 
-        DataNifas::create($request->all());
+        DataNifas::create($data);
         toast('Data Berhasil Ditambahkan','success');
         return redirect()->route('data-nifas.index');
     }
@@ -66,6 +70,7 @@ class DataNifasController extends Controller
         $request->validate([
             'tanggal'                   => 'required',
             'nama_ibu'                  => 'required',
+            'id_ibu'                    => 'required|exists:data_ibu_hamils,id',
             'kunjungan_nifas'           => 'required',
             'hasil_periksa_payudara'    => 'required',
             'hasil_periksa_pendarahan'  => 'required',
@@ -88,6 +93,7 @@ class DataNifasController extends Controller
         $data_nifas                            = DataNifas::find($id);
         $data_nifas->tanggal                   = $request->tanggal;
         $data_nifas->nama_ibu                  = $request->nama_ibu;
+        $data_nifas->id_ibu                  = $request->id_ibu;
         $data_nifas->kunjungan_nifas           = $request->kunjungan_nifas;
         $data_nifas->hasil_periksa_payudara    = $request->hasil_periksa_payudara;
         $data_nifas->hasil_periksa_pendarahan  = $request->hasil_periksa_pendarahan;

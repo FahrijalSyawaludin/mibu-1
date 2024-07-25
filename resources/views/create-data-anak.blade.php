@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -226,9 +238,10 @@
                                                     <select name="nama_ibu" id="nama_ibu" class="form-control @error('nama_ibu') is-invalid @enderror">
                                                         <option value="">Pilih Nama Ibu Hamil</option>
                                                         @foreach($data_ibu_hamils as $ibu)
-                                                            <option value="{{ $ibu->nama_ibu }}">{{ $ibu->nama_ibu }}</option>
+                                                            <option value="{{ $ibu->id }}" data-id="{{ $ibu->id }}">{{ $ibu->nama_ibu }}</option>
                                                         @endforeach
                                                     </select>
+                                                    <input type="hidden" name="id_ibu" id="id_ibu">
                                                     @error('nama_ibu')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -274,6 +287,28 @@
                                                     <input type="text" name="berat_badan" id="berat_badan" class="form-control @error('berat_badan') is-invalid @enderror"
                                                         placeholder="Masukkan Berat Badan Anak (Hanya Angka Saja)">
                                                     @error('berat_badan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Tinggi Badan</strong></label>
+                                                    <input type="text" name="tinggi_badan" id="tinggi_badan" class="form-control @error('tinggi_badan') is-invalid @enderror"
+                                                        placeholder="Masukkan Tinggi Badan Anak (Cm)">
+                                                    @error('tinggi_badan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Lingkar Kepala</strong></label>
+                                                    <input type="text" name="lingkar_kepala" id="lingkar_kepala" class="form-control @error('lingkar_kepala') is-invalid @enderror"
+                                                        placeholder="Masukkan Lingkar Kepala Anak (Cm)">
+                                                    @error('lingkar_kepala')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -364,6 +399,13 @@
             <!--end::Content-->
         </div>
         <!-- end::User Panel-->
+        <script>
+            document.getElementById('nama_ibu').addEventListener('change', function() {
+                var selectedOption = this.options[this.selectedIndex];
+                var idIbu = selectedOption.getAttribute('data-id');
+                document.getElementById('id_ibu').value = idIbu;
+            });
+        </script>
     </body>
     <!--end::Body-->
 @endsection

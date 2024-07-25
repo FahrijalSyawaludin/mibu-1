@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -231,8 +243,10 @@
                                                         <th>Nama Ibu</th>
                                                         <th>Nama Anak</th>
                                                         <th>Tanggal Lahir</th>
-                                                        <th>Umur</th>
-                                                        <th>Berat</th>
+                                                        <th>Umur (Bulan)</th>
+                                                        <th>Berat (Kg)</th>
+                                                        <th>Tinggi Badan (Cm)</th>
+                                                        <th>Lingkar Kepala (Cm)</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -248,7 +262,9 @@
                                                             <td>{{ $da->nama_anak }}</td>
                                                             <td>{{ $da->tanggal_lahir }}</td>
                                                             <td>{{ $da->umur }}</td>
-                                                            <td>{{ $da->berat_badan }} Kg</td>
+                                                            <td>{{ $da->berat_badan }}</td>
+                                                            <td>{{ $da->tinggi_badan }}</td>
+                                                            <td>{{ $da->lingkar_kepala }}</td>
                                                             <td>
                                                                 <!-- Action buttons -->
                                                                 <a href="{{ route('data-anak.edit', $da->id) }}"><i class="flaticon2-edit mr-3"></i></a>

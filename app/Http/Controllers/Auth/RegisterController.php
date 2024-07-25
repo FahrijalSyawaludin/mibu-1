@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\NoLeadingZero;
 
 class RegisterController extends Controller
 {
@@ -58,6 +59,11 @@ class RegisterController extends Controller
                 'name'     => ['required', 'string', 'max:255'],
                 'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'alamat'   => ['required', 'string', 'max:255'],
+                'no_telepon'   => ['required', 'string', 'max:255', new NoLeadingZero],
+                'no_str'   => ['required', 'string', 'max:255'],
+                'nik'   => ['required', 'string', 'max:255'],
+
             ],
             $messages,
         );
@@ -75,6 +81,10 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'alamat'    => $data['alamat'],
+            'no_telepon'    => $data['no_telepon'],
+            'no_str'    => $data['no_str'],
+            'nik'    => $data['nik'],
         ]);
     }
 }

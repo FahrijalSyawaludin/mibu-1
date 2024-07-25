@@ -10,7 +10,7 @@
         <div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
             <!--begin::Logo-->
             <a href="index.html">
-                <img alt="Logo" class="w-45px" src="assets/media/logos/Logo_Mibu.png" />
+                <img alt="Logo" class="w-45px" src="assets/media/logos/logowithbg.png" />
             </a>
             <!--end::Logo-->
             <!--begin::Toolbar-->
@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -228,18 +240,24 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Tanggal Periksa</th>
+                                                        <th>Nama Pemeriksa</th>
                                                         <th>Nama Ibu</th>
                                                         <th>Keluhan</th>
-                                                        <th>Tekanan Darah</th>
-                                                        <th>Berat Badan</th>
-                                                        <th>Umur Kehamilan</th>
-                                                        <th>Tinggi Fundus</th>
-                                                        <th>Letak Janin <br> Kep/Su/Li</th>
-                                                        <th>Denyut Jantung Janin</th>
+                                                        <th>Tekanan Darah (mmHg)</th>
+                                                        <th>Berat Badan (Kg)</th>
+                                                        <th>Tinggi Badan (Cm)</th>
+                                                        <th>Lingkar Perut (Cm)</th>
+                                                        <th>Lingkar Lengan Atas (Cm)</th>
+                                                        <th>Umur Kehamilan (Minggu)</th>
+                                                        <th>Tinggi Fundus (Cm)</th>
+                                                        <th>Letak Janin <br> (Kep/Su/Li)</th>
+                                                        <th>Denyut Jantung Janin (BPM)</th>
                                                         <th>Hasil Pemeriksaan Lab</th>
                                                         <th>Tindakan</th>
                                                         <th>Kaki Bengkak</th>
                                                         <th>Nasihat Untuk Pasien</th>
+                                                        <th>Tanggal Hpl</th>
+                                                        <th>Foto USG</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -251,18 +269,31 @@
                                                         <tr>
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $dk->tanggal }}</td>
+                                                            <td>{{ $dk->nama_pemeriksa }}</td>
                                                             <td>{{ $dk->nama_ibu }}</td>
                                                             <td>{{ $dk->keluhan }}</td>
-                                                            <td>{{ $dk->tekanan_darah }} mmHg</td>
-                                                            <td>{{ $dk->berat_badan }} Kg</td>
+                                                            <td>{{ $dk->tekanan_darah }}</td>
+                                                            <td>{{ $dk->berat_badan }}</td>
+                                                            <td>{{ $dk->tinggi_badan }}</td>
+                                                            <td>{{ $dk->lingkar_perut }}</td>
+                                                            <td>{{ $dk->lingkar_lengan_atas }}</td>
                                                             <td>{{ $dk->umur_kehamilan }}</td>
-                                                            <td>{{ $dk->tinggi_fundus }} Cm</td>
+                                                            <td>{{ $dk->tinggi_fundus }}</td>
                                                             <td>{{ $dk->letak_janin }}</td>
-                                                            <td>{{ $dk->denyut_jantung_janin }} BPM</td>
+                                                            <td>{{ $dk->denyut_jantung_janin }}</td>
                                                             <td>{{ $dk->hasil_lab }}</td>
                                                             <td>{{ $dk->tindakan }}</td>
                                                             <td>{{ $dk->kaki_bengkak }}</td>
                                                             <td>{{ $dk->nasihat }}</td>
+                                                            <td>{{ $dk->tanggal_hpl }}</td>
+                                                            <td>
+                                                                <!-- Foto USG Column with Eye Icon -->
+                                                                @if($dk->foto_usg)
+                                                                    <a href="{{ route('data-kesehatan.view-foto-usg', $dk->id) }}" target="blank"><i class="flaticon-eye"></i></a>
+                                                                @else
+                                                                    <span>No Image</span>
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 <!-- Action buttons -->
                                                                 <a href="{{ route('data-kesehatan.edit', $dk->id) }}"><i class="flaticon2-edit mr-3"></i></a>
@@ -409,11 +440,12 @@
         $(document).ready(function() {
             $(document).on('change', '#entries', function() {
                 window.location =
-                    "{{ route('home') }}?search={{ request('search') }}&per_page=" + $(this)
+                    "{{ route('data-kesehatan.index') }}?search={{ request('search') }}&per_page=" + $(this)
                     .val();
             });
         });
     </script>
+    
     </body>
     <!--end::Body-->
 @endsection

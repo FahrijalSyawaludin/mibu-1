@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('vitamin_a');
             $table->string('masalah');
             $table->string('tindakan');
+            $table->bigInteger('id_ibu');
             $table->timestamps();
         });
     }

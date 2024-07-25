@@ -26,9 +26,9 @@ return new class extends Migration
             $table->string('tindakan');
             $table->string('kaki_bengkak');
             $table->string('nasihat');
+            $table->bigInteger('id_ibu');
             $table->timestamps();
-            });
-
+        });
     }
 
     /**

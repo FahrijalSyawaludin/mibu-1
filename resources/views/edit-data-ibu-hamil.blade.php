@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -303,6 +315,61 @@
                                                     <input type="text" name="umur_suami" id="umur_suami" class="form-control @error('umur_suami') is-invalid @enderror" value="{{ $data_ibu_hamils->umur_suami }}"
                                                         placeholder="Masukkan Umur Suami (Hanya Angka Saja)">
                                                     @error('umur_suami')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>No JKN Faskes Tk 1 </strong></label>
+                                                    <input type="text" name="no_jkn_faskes_tk_1" id="no_jkn_faskes_tk_1" class="form-control @error('no_jkn_faskes_tk_1') is-invalid @enderror" value="{{ $data_ibu_hamils->no_jkn_faskes_tk_1 }}"
+                                                        placeholder="Masukkan No JKN Faskes Tk 1" value="{{ old('no_jkn_faskes_tk_1') }}">
+                                                    @error('no_jkn_faskes_tk_1')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>No JKN Rujukan </strong></label>
+                                                    <input type="text" name="no_jkn_rujukan" id="no_jkn_rujukan" class="form-control @error('no_jkn_rujukan') is-invalid @enderror" value="{{ $data_ibu_hamils->no_jkn_rujukan }}"
+                                                        placeholder="Masukkan No JKN Rujukan" value="{{ old('no_jkn_rujukan') }}">
+                                                    @error('no_jkn_rujukan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Golongan Darah </strong></label>
+                                                    <input type="text" name="gol_darah" id="gol_darah" class="form-control @error('gol_darah') is-invalid @enderror" value="{{ $data_ibu_hamils->gol_darah}}"
+                                                        placeholder="Masukkan Golongan Darah" value="{{ old('gol_darah') }}">
+                                                    @error('gol_darah')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group mt-5">
+                                                    <label for=""><strong>Pekerjaan </strong></label>
+                                                    <input type="text" name="pekerjaan" id="pekerjaan" class="form-control @error('pekerjaan') is-invalid @enderror" value="{{ $data_ibu_hamils->pekerjaan }}"
+                                                        placeholder="Masukkan Pekerjaan" value="{{ old('pekerjaan') }}">
+                                                    @error('pekerjaan')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                                
+                                                <div class="form-group mt-5">
+                                                    <label for="tanggal_hpl"><strong>Tanggal HPL (Optional)</strong></label>
+                                                    <input type="date" name="tanggal_hpl" id="tanggal_hpl" class="form-control @error('tanggal_hpl') is-invalid @enderror" value="{{ $data_ibu_hamils->tanggal_hpl }}"
+                                                        placeholder="Pilih HPL (Optional)">
+                                                    @error('tanggal_hpl')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>

@@ -40,6 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'ibu' => [
+            'driver' => 'session',
+            'provider' => 'data_ibu_hamils',
+            'hash' => false,
+        ],    
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -65,10 +77,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'data_ibu_hamils' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DataIbuHamil::class,
+        ],
     ],
 
     /*

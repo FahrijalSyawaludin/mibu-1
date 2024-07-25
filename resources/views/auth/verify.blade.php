@@ -1,3 +1,4 @@
+<!-- resources/views/auth/verify-email.blade.php -->
 @extends('layouts.app')
 
 @section('content')

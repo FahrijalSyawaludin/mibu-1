@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('imunisasi_campak_rubella_dan_dt');
             $table->string('imunisasi_tetanus_diphteria_td');
             $table->string('nama_pemeriksa');
+            $table->bigInteger('id_anak');
             $table->timestamps();
         });
     }

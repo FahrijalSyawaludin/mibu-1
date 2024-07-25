@@ -15,6 +15,7 @@ class DataKesehatan extends Model
     protected $fillable =  [
         'tanggal',
         'nama_ibu',
+        'id_ibu',
         'keluhan',
         'tekanan_darah',
         'berat_badan',
@@ -26,6 +27,13 @@ class DataKesehatan extends Model
         'tindakan',
         'kaki_bengkak',
         'nasihat',
+        'foto_usg',
+        'nama_pemeriksa',
+        'id_pemeriksa',
+        'tanggal_hpl',
+        'tinggi_badan',
+        'lingkar_perut',
+        'lingkar_lengan_atas'
     ];
 
     public function ibuHamil()

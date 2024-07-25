@@ -57,8 +57,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +85,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i class="menu-icon 
                                         fas fa-hospital-user"></i>
@@ -101,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -230,14 +242,27 @@
                                                         <th>No</th>
                                                         <th>Tanggal Periksa</th>
                                                         <th>Nama Anak</th>
-                                                        <th>Imunisasi DPT-HB-Hib 1 Polio 2</th>
-                                                        <th>Imunisasi DPT-HB-Hib 2 Polio 3</th>
-                                                        <th>Imunisasi DPT-HB-Hib 3 Polio 4</th>
-                                                        <th>Imunisasi Campak</th>
-                                                        <th>Imunisasi DPT-HB-Hib 1 Dosis</th>
-                                                        <th>Imunisasi Campak Rubella 1 Dosis</th>
-                                                        <th>Imunisasi Campak Rubella dan DT</th>
-                                                        <th>Imunisasi Tetanus Diphteria TD</th>
+                                                        <th>Hepatitis B</th>
+                                                        <th>BCG</th>
+                                                        <th>Polio Tetes 1</th>
+                                                        <th>DPT-HB-Hib 1</th>
+                                                        <th>Polio Tetes 2</th>
+                                                        <th>Rota Virus 1</th>
+                                                        <th>PCV 1</th>
+                                                        <th>DPT-HB-Hib 2</th>
+                                                        <th>Polio Tetes 3</th>
+                                                        <th>Rota Virus 2</th>
+                                                        <th>PCV 2</th>
+                                                        <th>DPT-HB-Hib 3</th>
+                                                        <th>Polio Tetes 4</th>
+                                                        <th>Polio Suntik 1</th>
+                                                        <th>Rota Virus 3</th>
+                                                        <th>Campak Rubella</th>
+                                                        <th>Polio Suntik 2</th>
+                                                        <th>Japanese Encephalitis</th>
+                                                        <th>PCV 3</th>
+                                                        <th>DPT-HB-Hib Lanjutan</th>
+                                                        <th>Campak Rubella Lanjutan</th>
                                                         <th>Nama Pemeriksa</th>
                                                         <th>Aksi</th>
                                                     </tr>
@@ -251,14 +276,444 @@
                                                             <td>{{ $num++ }}</td>
                                                             <td>{{ $di->tanggal }}</td>
                                                             <td>{{ $di->nama_anak }}</td>
-                                                            <td>{{ $di->imunisasi_dpt_hb_hib_1_polio_2 }}</td>
-                                                            <td>{{ $di->imunisasi_dpt_hb_hib_2_polio_3 }}</td>
-                                                            <td>{{ $di->imunisasi_dpt_hb_hib_3_polio_4 }}</td>
-                                                            <td>{{ $di->imunisasi_campak }}</td>
-                                                            <td>{{ $di->imunisasi_dpt_hb_hib_1_dosis }}</td>
-                                                            <td>{{ $di->imunisasi_campak_rubella_1_dosis }}</td>
-                                                            <td>{{ $di->imunisasi_campak_rubella_dan_dt }}</td>
-                                                            <td>{{ $di->imunisasi_tetanus_diphteria_td }}</td>
+                                                            <td>
+                                                                @if ($di->hepatitis_b == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                <br>
+                                                                <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_hepatitis_b }}</span>
+                                                            </td>
+                                                            <td>
+                                                                @if ($di->bcg == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_bcg)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_bcg }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_tetes_1 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_tetes_1)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_tetes_1 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->dpt_hb_hib_1 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_dpt_hb_hib_1)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_dpt_hb_hib_1 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_tetes_2 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_tetes_2)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_tetes_2 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->rota_virus_1 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_rota_virus_1)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_rota_virus_1 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->pcv_1 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_pcv_1)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_pcv_1 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->dpt_hb_hib_2 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_dpt_hb_hib_2)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_dpt_hb_hib_2 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_tetes_3 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_tetes_3)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_tetes_3 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->rota_virus_2 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_rota_virus_2)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_rota_virus_2 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->pcv_2 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_pcv_2)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_pcv_2 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->dpt_hb_hib_3 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_dpt_hb_hib_3)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_dpt_hb_hib_3 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_tetes_4 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_tetes_4)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_tetes_4 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_suntik_1 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_suntik_1)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_suntik_1 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->rota_virus_3 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_rota_virus_3)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_rota_virus_3 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->campak_rubella == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_campak_rubella)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_campak_rubella }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->polio_suntik_2 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_polio_suntik_2)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_polio_suntik_2 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->japanese_encephalitis == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_japanese_encephalitis)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_japanese_encephalitis }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->pcv_3 == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_pcv_3)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_pcv_3 }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                           <td>
+                                                                @if ($di->dpt_hb_hib_lanjutan == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_dpt_hb_hib_lanjutan)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_dpt_hb_hib_lanjutan }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @if ($di->campak_rubella_lanjutan == 'Sudah')
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @else
+                                                                    <span>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                        </svg>
+                                                                    </span>
+                                                                @endif
+                                                                @if ($di->tanggal_imunisasi_campak_rubella_lanjutan)
+                                                                    <br>
+                                                                    <span style="font-size: xx-small;">Di Imunisasi tanggal: </span>
+                                                                    <span style="font-weight: bold; font-size: x-small;">{{ $di->tanggal_imunisasi_campak_rubella_lanjutan }}</span>
+                                                                @endif
+                                                            </td>
+                                                            
                                                             <td>{{ $di->nama_pemeriksa }}</td>
                                                             <td>
                                                                 <!-- Action buttons -->
@@ -294,7 +749,7 @@
                                                         </tr>
                                                     @empty
                                                     <tr>
-                                                        <td colspan="15" style="text-align: center;">Tidak Ada Data Ditemukan</td>
+                                                        <td colspan="20" style="text-align: center;">Tidak Ada Data Ditemukan</td>
                                                     </tr>
                                                     @endforelse
                                                 </tbody>

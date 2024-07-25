@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -50,6 +50,11 @@ class HomeController extends Controller
             'kehamilan_ke'   => 'required|integer',
             'nama_suami'     => 'required',
             'umur_suami'     => 'required|integer',
+            'password'       => 'required|min:8',
+            'no_jkn_faskes_tk_1' => 'required',
+            'no_jkn_rujukan' => 'required',
+            'gol_darah' => 'required',
+            'pekerjaan' => 'required',
         ], [
             'nama_ibu.required'     => 'Nama Ibu wajib diisi.',
             'umur_ibu.required'     => 'Umur Ibu wajib diisi.',
@@ -66,6 +71,12 @@ class HomeController extends Controller
             'nama_suami.required'   => 'Nama Suami wajib diisi.',
             'umur_suami.required'   => 'Umur Suami wajib diisi.',
             'umur_suami.integer'    => 'Umur Suami harus berupa angka.',
+            'password.required'     => 'Password harus diisi',
+            'password.min'          => 'Password harus terdiri dari minimal 8 karakter.',
+            'no_jkn_faskes_tk_1.required' => 'required',
+            'no_jkn_rujukan.required' => 'required',
+            'gol_darah.required' => 'required',
+            'pekerjaan.required' => 'required',
         ]);
         
         DataIbuHamil::create($request->all());
@@ -91,6 +102,10 @@ class HomeController extends Controller
             'kehamilan_ke'   => 'required|integer',
             'nama_suami'     => 'required',
             'umur_suami'     => 'required|integer',
+            'no_jkn_faskes_tk_1' => 'required',
+            'no_jkn_rujukan' => 'required',
+            'gol_darah' => 'required',
+            'pekerjaan' => 'required',
         ], [
             'nama_ibu.required'     => 'Nama Ibu wajib diisi.',
             'umur_ibu.required'     => 'Umur Ibu wajib diisi.',
@@ -107,6 +122,10 @@ class HomeController extends Controller
             'nama_suami.required'   => 'Nama Suami wajib diisi.',
             'umur_suami.required'   => 'Umur Suami wajib diisi.',
             'umur_suami.integer'    => 'Umur Suami harus berupa angka.',
+            'no_jkn_faskes_tk_1.required' => 'required',
+            'no_jkn_rujukan.required' => 'required',
+            'gol_darah.required' => 'required',
+            'pekerjaan.required' => 'required',
         ]);
         
         $data_ibu_hamils               = DataIbuHamil::find($id);
@@ -119,6 +138,11 @@ class HomeController extends Controller
         $data_ibu_hamils->kehamilan_ke = $request->kehamilan_ke;
         $data_ibu_hamils->nama_suami   = $request->nama_suami;
         $data_ibu_hamils->umur_suami   = $request->umur_suami;
+        $data_ibu_hamils->no_jkn_faskes_tk_1   = $request->no_jkn_faskes_tk_1;
+        $data_ibu_hamils->no_jkn_rujukan   = $request->no_jkn_rujukan;
+        $data_ibu_hamils->gol_darah   = $request->gol_darah;
+        $data_ibu_hamils->pekerjaan   = $request->pekerjaan;
+        $data_ibu_hamils->tanggal_hpl   = $request->tanggal_hpl;
         $data_ibu_hamils->save();
 
         toast('Data Berhasil Diubah','success');
@@ -153,7 +177,7 @@ class HomeController extends Controller
 
         $csv .= "Data Ibu Hamil - MIBU \n \n";
 
-        $csv .= "No,Nama Ibu,Umur Ibu,Alamat,Email,NIK,Nomor Telepon,Kehamilan Ke,Nama Suami,Umur Suami\n";
+        $csv .= "No,Nama Ibu,Umur Ibu,Alamat,Email,NIK,Nomor Telepon,Kehamilan Ke,Nama Suami,Umur Suami,No JKN Faskes TK 1,No JKN Rujukan,Gol Darah,Pekerjaan\n";
 
         $counter = 1;
 
@@ -161,12 +185,30 @@ class HomeController extends Controller
             $umur_ibu             = $row->umur_ibu . " Tahun";
             $umur_suami           = $row->umur_suami . " Tahun";
 
-            $csv .= "{$counter},{$row->nama_ibu},{$umur_ibu},{$row->alamat},{$row->email},{$row->email},{$row->no_telepon},{$row->kehamilan_ke},{$row->nama_suami},{$umur_suami}\n";
+            $csv .= "{$counter},{$row->nama_ibu},{$umur_ibu},{$row->alamat},{$row->email},{$row->email},{$row->no_telepon},{$row->kehamilan_ke},{$row->nama_suami},{$umur_suami},{$row->no_jkn_faskes_tk_1},{$row->no_jkn_rujukan},{$row->gol_darah},{$row->pekerjaan}\n";
             
             $counter++;
         }
 
         return $csv;
+    }
+    
+    public function uploadHpl(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:data_ibu_hamils,id',
+            'tanggal_hpl' => 'required|date',
+        ]);
+
+        $id = $request->input('id');
+        $tanggalHpl = $request->input('tanggal_hpl');
+
+        $dataIbuHamil = DataIbuHamil::find($id);
+        $dataIbuHamil->tanggal_hpl = $tanggalHpl;
+        $dataIbuHamil->save();
+
+        toast('Tanggal HPL Berhasil Diupload', 'success');
+        return redirect()->route('home');
     }
 
 

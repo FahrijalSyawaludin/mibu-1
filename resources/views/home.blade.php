@@ -2,7 +2,6 @@
 
 @section('content')
     <!--begin::Body-->
-
     <body id="kt_body"
         class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed page-loading">
         <!--begin::Main-->
@@ -57,8 +56,8 @@
                     <!--begin::Brand-->
                     <div class="brand flex-column-auto" id="kt_brand">
                         <!--begin::Logo-->
-                        <a href="index.html" class="brand-logo">
-                            <img alt="Logo" class="w-65px" src="assets/media/logos/Logo_Mibu.png" />
+                        <a href="{{ route('home') }}" class="brand-logo">
+                            <img alt="Logo" class="w-65px" src="assets/media/logos/logowithbg.png" />
                         </a>
                         <!--end::Logo-->
                     </div>
@@ -85,6 +84,12 @@
                                     </a>
                                 </li>
                                 <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-layanan-kb.index') }}" class="menu-link" style="display: flex; align-items: center; justify-content: center; text-align: center;">
+                                        <i class="menu-icon fas fa-notes-medical"></i>
+                                        <span class="menu-text">Data Layanan KB</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
                                     <a href="{{ route('data-nifas.index') }}" class="menu-link">
                                         <i
                                             class="menu-icon 
@@ -102,6 +107,12 @@
                                     <a href="{{ route('data-imunisasi.index') }}" class="menu-link">
                                         <i class="menu-icon flaticon2-hospital"></i>
                                         <span class="menu-text">Data Imunisasi</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item menu-item" aria-haspopup="true">
+                                    <a href="{{ route('data-artikel.index') }}" class="menu-link">
+                                        <i class="menu-icon fas fa-newspaper"></i>
+                                        <span class="menu-text">Artikel</span>
                                     </a>
                                 </li>
                             </ul>
@@ -240,7 +251,13 @@
                                                     <th>Kehamilan Ke</th>
                                                     <th>Nama Suami</th>
                                                     <th>Umur Suami</th>
+                                                    <th>No JKN Faskes Tk 1</th>
+                                                    <th>No JKN Rujukan</th>
+                                                    <th>Golongan Darah</th>
+                                                    <th>Pekerjaan</th>
+                                                    <th>Tanggal HPL</th>
                                                     <th>Aksi</th>
+                                                
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -262,6 +279,17 @@
                                                         <td>{{ $dih->kehamilan_ke }}</td>
                                                         <td>{{ $dih->nama_suami }}</td>
                                                         <td>{{ $dih->umur_suami }} Tahun</td>
+                                                        <td>{{ $dih->no_jkn_faskes_tk_1 }}</td>
+                                                        <td>{{ $dih->no_jkn_rujukan }}</td>
+                                                        <td>{{ $dih->gol_darah }}</td>
+                                                        <td>{{ $dih->pekerjaan }}</td>
+                                                        <td>
+                                                        @if($dih->tanggal_hpl)
+                                                            {{ $dih->tanggal_hpl }}
+                                                        @else
+                                                            <button class="btn btn-sm btn-primary tambah-hpl-btn" data-id="{{ $dih->id }}" data-toggle="modal" data-target="#tambahHplModal">Tambah</button>
+                                                        @endif
+                                                        </td>
                                                         <td>
                                                             <!-- Action buttons -->
                                                             <a href="{{ route('data-ibu-hamil.edit', $dih->id) }}"><i
@@ -355,6 +383,35 @@
             <!--end::Page-->
         </div>
         <!--end::Main-->
+        
+        <!-- Modal -->
+        <div class="modal fade" id="tambahHplModal" tabindex="-1" role="dialog" aria-labelledby="tambahHplModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="tambahHplForm" method="POST" action="{{ route('data-ibu-hamil.upload-hpl') }}">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tambahHplModalLabel">Tambah Tanggal HPL</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="ibuHamilId" value="">
+                            <div class="form-group">
+                                <label for="tanggalHpl">Tanggal HPL</label>
+                                <input type="date" class="form-control" id="tanggalHpl" name="tanggal_hpl" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
         <!-- begin::User Panel-->
         <div id="kt_quick_user" class="offcanvas offcanvas-right p-10">
             <!--begin::Header-->
@@ -424,6 +481,7 @@
         <!-- end::User Panel-->
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function() {
                 $(document).on('change', '#entries', function() {
@@ -431,6 +489,11 @@
                         "{{ route('home') }}?search={{ request('search') }}&per_page=" + $(this)
                         .val();
                 });
+            });
+            
+            $(document).on('click', '.tambah-hpl-btn', function () {
+                var id = $(this).data('id');
+                $('#ibuHamilId').val(id);
             });
         </script>
     </body>
